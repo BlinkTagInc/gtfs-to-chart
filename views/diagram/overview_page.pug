@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  include formatting_functions.pug
+  .container
+    .row.mt-4.mb-2
+      .col-md-12
+        h1.overview-label= `${agency.agency_name} Routes`
+    .row
+      if !routes || !routes.length
+        .col-md-6.col-md-offset-3
+          .well No routes found
+      else
+        div(class= config.showMap ? 'col-md-3' : 'col')
+          .list-group.overview-list
+            each route in routes
+              a.list-group-item(href=`${route.relativePath}`)
+                h4.list-group-item-heading.d-flex.align-items-center
+                  if route.route_color
+                    .route-color-swatch-large(style=`background-color: #${route.route_color}`)
+                  span= getRouteName(route)

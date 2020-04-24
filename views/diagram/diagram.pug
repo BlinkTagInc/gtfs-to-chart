@@ -1,0 +1,14 @@
+include formatting_functions.pug
+
+<!-- Diagram generated on #{Date()} using GTFS-to-DIAGRAM version #{config.gtfsToDiagramVersion} -->
+.diagram-page
+  .container
+    .row.mt-4.mb-4
+      .col-md-12
+        h1.timetable-page-label
+          if route.route_color
+            .route-color-swatch-large(style=`background-color: #${route.route_color}`)
+          span= getRouteName(route)
+
+    .diagram(id=`route_id_${route.route_id}`)
+      div Diagram

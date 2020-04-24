@@ -1,0 +1,8 @@
+node_modules
+diagrams
+config*
+!config-sample.json
+views/custom
+
+.git
+.DS_Store

@@ -1,0 +1,22 @@
+-
+  function getRouteName(route) {
+    const {
+      route_short_name: shortName,
+      route_long_name: longName,
+    } = route;
+    let routeName = '';
+
+    if (shortName !== '' && shortName !== undefined) {
+      routeName += shortName;
+    }
+
+    if (shortName !== '' && shortName !== undefined && longName !== '' && longName !== undefined) {
+      routeName += ' - ';
+    }
+
+    if (longName !== '' && longName !== undefined) {
+      routeName += longName;
+    }
+    
+    return routeName;
+  }

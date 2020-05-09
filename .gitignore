@@ -6,3 +6,4 @@ views/custom
 
 .git
 .DS_Store
+public/js/schedule.tsv

@@ -52,30 +52,14 @@ router.get('/diagrams/:agencyKey', async (request, response, next) => {
  * Show a specific diagram
  */
 router.get('/diagrams/:agencyKey/:routeId', async (request, response, next) => {
-  const {agencyKey, routeId} = request.params;
-
-  if (!agencyKey) {
-    return next(new Error('No agencyKey provided'));
-  }
-
-  if (!routeId) {
-    return next(new Error('No routeId provided'));
-  }
+  const { agencyKey, routeId } = request.params;
 
   try {
-    const routes = await gtfs.getRoutes({
-      agency_key: agencyKey,
-      route_id: routeId
-    }, undefined, {lean: true});
-
-    if (!routes || !routes.length) {
-      return next(new Error('Invalid routeId provided'));
-    }
-
-    const diagramHtml = await utils.generateDiagramHTML(routes[0], config);
+    const date = '20200505';
+    const diagramHtml = await utils.generateDiagramHTML(routeId, agencyKey, date, config);
     response.send(diagramHtml);
   } catch (error) {
-    next(error);
+    return response.render('error', { error }); 
   }
 });
 

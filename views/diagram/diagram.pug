@@ -11,4 +11,10 @@ include formatting_functions.pug
           span= getRouteName(route)
 
     .diagram(id="diagram")
-      div Diagram
+      .row
+        .col-md-6
+          .card
+            .card-header
+              h3 Transit Stringline Chart
+            .card-body
+              div Based on <a href="https://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey">E.J. Marey’s</a> graphical train schedule. Stations are positioned to scale so that slope encodes speed and can show where express trips pass non-express trips. Based on work by <a href="https://observablehq.com/@mbostock/mareys-trains">Mike Bostock</a>.

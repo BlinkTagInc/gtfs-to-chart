@@ -32,7 +32,7 @@ router.get('/', async (request, response, next) => {
 /*
  * Show all routes for an agency
  */
-router.get('/diagrams/:agencyKey', async (request, response, next) => {
+router.get('/charts/:agencyKey', async (request, response, next) => {
   const { agencyKey } = request.params;
 
   if (!agencyKey) {
@@ -49,15 +49,15 @@ router.get('/diagrams/:agencyKey', async (request, response, next) => {
 });
 
 /*
- * Show a specific diagram
+ * Show a specific chart
  */
-router.get('/diagrams/:agencyKey/:routeId', async (request, response) => {
+router.get('/charts/:agencyKey/:routeId', async (request, response) => {
   const { agencyKey, routeId } = request.params;
 
   try {
     const date = '20200505';
-    const diagramHtml = await utils.generateDiagramHTML(routeId, agencyKey, date, config);
-    response.send(diagramHtml);
+    const html = await utils.generateChartHTML(routeId, agencyKey, date, config);
+    response.send(html);
   } catch (error) {
     return response.render('error', { error });
   }

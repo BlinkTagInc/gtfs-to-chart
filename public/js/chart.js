@@ -1,4 +1,4 @@
-/* global _, d3, moment, diagramData */
+/* global _, d3, moment, chartData */
 /* eslint no-var: "off", prefer-arrow-callback: "off", no-unused-vars: "off" */
 
 function parseTime(string) {
@@ -38,7 +38,7 @@ function getPrimaryDirectionId(stations) {
   return largestDirectionGroup[0].direction_id;
 }
 
-function renderDiagram(data) {
+function renderChart(data) {
   const {
     trips,
     stations,
@@ -173,7 +173,7 @@ function renderDiagram(data) {
       });
   };
 
-  const svg = d3.select('#diagram')
+  const svg = d3.select('#chart')
     .append('svg')
     .attr('viewBox', [0, 0, width, height]);
 
@@ -207,4 +207,4 @@ function renderDiagram(data) {
     .call(tooltip);
 }
 
-renderDiagram(diagramData);
+renderChart(chartData);

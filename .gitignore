@@ -1,9 +1,8 @@
 node_modules
-diagrams
+charts
 config*
 !config-sample.json
 views/custom
 
 .git
 .DS_Store
-public/js/schedule.tsv

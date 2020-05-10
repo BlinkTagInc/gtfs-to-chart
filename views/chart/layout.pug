@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset="utf-8")
+    link(rel="stylesheet" href="https://unpkg.com/bootstrap@4/dist/css/bootstrap.min.css")
+    link(rel="stylesheet" href=`${config.assetPath}css/chart_styles.css`)
+    meta(name="viewport" content="initial-scale=1.0, width=device-width")
+
+    block extraHeader
+
+  body
+    block content
+
+    block footer

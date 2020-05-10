@@ -12,7 +12,7 @@ block content
           .well No routes found
       else
         div(class= config.showMap ? 'col-md-3' : 'col')
-          .list-group.overview-list
+          .list-group
             each route in routes
               a.list-group-item(href=`${route.relativePath}`)
                 h4.list-group-item-heading.d-flex.align-items-center

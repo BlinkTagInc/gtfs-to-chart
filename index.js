@@ -1,1 +1,1 @@
-module.exports = require('./lib/gtfs-to-diagram');
+module.exports = require('./lib/gtfs-to-chart');

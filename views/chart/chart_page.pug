@@ -1,6 +1,6 @@
 extends layout
 block content
-  include diagram.pug
+  include chart.pug
 
 block footer
   script(src="https://unpkg.com/d3@5")
@@ -8,5 +8,5 @@ block footer
   script(src="https://unpkg.com/lodash@4/lodash.min.js")
   script(src="https://unpkg.com/moment@2/min/moment.min.js")
   script.
-    const diagramData = !{JSON.stringify(diagramData) || '\'\''};
-  script(src=`${config.assetPath}js/diagram.js`)
+    const chartData = !{JSON.stringify(chartData) || '\'\''};
+  script(src=`${config.assetPath}js/chart.js`)

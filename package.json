@@ -1,18 +1,19 @@
 {
-  "name": "gtfs-to-diagram",
-  "description": "Build diagrams of a transit route from GTFS",
+  "name": "gtfs-to-chart",
+  "description": "Generate stringline charts of a transit routes from GTFS",
   "version": "0.1.0",
   "keywords": [
     "transit",
     "gtfs",
     "transportation",
-    "visualizations"
+    "visualizations",
+    "d3"
   ],
   "private": false,
   "author": "Brendan Nee <brendan@blinktag.com>",
-  "repository": "git://github.com/blinktaginc/gtfs-to-diagram",
+  "repository": "git://github.com/blinktaginc/gtfs-to-chart",
   "bugs": {
-    "url": "https://github.com/blinktaginc/gtfs-to-diagram/issues"
+    "url": "https://github.com/blinktaginc/gtfs-to-chart/issues"
   },
   "license": "MIT",
   "scripts": {
@@ -20,7 +21,7 @@
     "test": "xo"
   },
   "bin": {
-    "gtfs-to-diagram": "bin/gtfs-to-diagram.js"
+    "gtfs-to-chart": "bin/gtfs-to-chart.js"
   },
   "main": "index",
   "dependencies": {

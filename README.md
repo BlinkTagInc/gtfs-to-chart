@@ -1,6 +1,6 @@
-# GTFS to Diagram
+# GTFS to Chart
 
-`gtfs-to-diagram` creates diagram showing all vehicles on a specific transit route, based on E.J. Marey's graphical train  schedule.
+`gtfs-to-chart` creates stringline charts showing all vehicles on a transit route, based on E.J. Marey's graphical train schedule.
 
 It uses code developed by [Mike Bostock](https://observablehq.com/@mbostock/mareys-trains) for vidualizing transit data in d3 and connects it to GTFS so that any transit route from any agency can be visualized.
 
@@ -8,26 +8,26 @@ It uses code developed by [Mike Bostock](https://observablehq.com/@mbostock/mare
 
 If you would like to use this library as a command-line utility, you can install it globally directly from [npm](https://npmjs.org):
 
-    npm install gtfs-to-diagram -g
+    npm install gtfs-to-chart -g
 
 If you are using this as a node module as part of an application, you can include it in your project's `package.json` file.
 
 ## Command-line example
 
-    gtfs-to-diagram --configPath /path/to/your/custom-config.json
+    gtfs-to-chart --configPath /path/to/your/custom-config.json
 
 ## Code example
 
-    const gtfsToDiagram = require('gtfs-to-diagram');
+    const gtfsToChart = require('gtfs-to-chart');
     const mongoose = require('mongoose');
     const config = require('config.json');
 
     mongoose.Promise = global.Promise;
     mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
-    gtfsToDiagram(config)
+    gtfsToChart(config)
     .then(() => {
-      console.log('Diagram Generation Successful');
+      console.log('Chart Generation Successful');
       process.exit();
     })
     .catch(err => {
@@ -47,8 +47,8 @@ All files starting with `config*.json` are .gitignored - so you can create multi
 | ------ | ---- | ----------- |
 | [`agencies`](#agencies) | array | An array of GTFS files to be imported. |
 | [`beautify`](#beautify) | boolean | Whether or not to beautify the HTML output. |
-| [`diagramDate`](#templatepath) | string | The date to use for generating the stringline chart. |
-| [`templatePath`](#templatepath) | string | Path to custom pug template for rendering diagram. |
+| [`chartDate`](#templatepath) | string | The date to use for generating the stringline chart. |
+| [`templatePath`](#templatepath) | string | Path to custom pug template for rendering chart html. |
 
 ### agencies
 
@@ -120,18 +120,18 @@ API along with your API token.
     "beautify": false
 ```
 
-### diagramDate
+### chartDate
 
-{String} The date to use for generating digrams in YYYYMMDD format. Diagrams will be for service on this date. Defaults to today's date.
+{String} The date to use for generating charts in YYYYMMDD format. Charts will be for service on this date. Defaults to today's date.
 
 ```
-    "diagramDate": "20200505"
+    "chartDate": "20200505"
 ```
 
 
 ### templatePath
 
-{String} Path to a folder containing (pug)[https://pugjs.org/] template for rendering diagrams. This is optional. Defaults to using the templates provided in `views/diagram`. All files within the `/views/custom` folder will be .gitignored, so you can copy the `views/diagram` folder to `views/custom/myagency` and make any modifications needed. Any custom views folder should conatain pug templates called `diagram_page.pug` and  `overview_page.pug`.
+{String} Path to a folder containing (pug)[https://pugjs.org/] template for rendering charts. This is optional. Defaults to using the templates provided in `views/chart`. All files within the `/views/custom` folder will be .gitignored, so you can copy the `views/chart` folder to `views/custom/myagency` and make any modifications needed. Any custom views folder should conatain pug templates called `chart_page.pug` and  `overview_page.pug`.
 
 ```
     "templatePath": "views/custom/my-agency/"
@@ -143,15 +143,15 @@ Ensure than MongoDB is running locally.
 
     mongod
 
-To generate diagrams, run `gtfs-to-diagram`.
+To generate charts, run `gtfs-to-chart`.
 
-    gtfs-to-diagram
+    gtfs-to-chart
 
-By default, `gtfs-to-diagram` will look for a `config.json` file in the project root. To specify a different path for the configuration file:
+By default, `gtfs-to-chart` will look for a `config.json` file in the project root. To specify a different path for the configuration file:
 
-    gtfs-to-diagram --configPath /path/to/your/custom-config.json
+    gtfs-to-chart --configPath /path/to/your/custom-config.json
 
-This will download the GTFS file specified in `config.js` .  Then, `gtfs-to-diagram` will build the HTML diagrams and save them in `diagrams/:agency_key`.
+This will download the GTFS file specified in `config.js` .  Then, `gtfs-to-chart` will build the HTML charts and save them in `charts/:agency_key`.
 
 ### Options
 
@@ -159,23 +159,23 @@ This will download the GTFS file specified in `config.js` .  Then, `gtfs-to-diag
 
 Allows specifying a configuration json file. Defaults to config.json in the current directory.
 
-    gtfs-to-diagram --configPath /path/to/your/custom-config.json
+    gtfs-to-chart --configPath /path/to/your/custom-config.json
 
 `skipImport`
 
 Skips importing GTFS into MongoDB. Useful if you are rerunning with an unchanged GTFS file. If you use this option and the GTFS file hasn't been imported, you'll get an error.
 
-    gtfs-to-diagram --skipImport
+    gtfs-to-chart --skipImport
 
 ## Processing very large GTFS files.
 
 By default, node has a memory limit of 512 MB or 1 GB. Use the `max-old-space-size` option. For example to allocate 2 GB:
 
-    node --max-old-space-size=2000 /usr/local/bin/gtfs-to-diagram
+    node --max-old-space-size=2000 /usr/local/bin/gtfs-to-chart
 
 ## Contributing
 
-Pull requests are welcome, as is feedback and [reporting issues](https://github.com/blinktaginc/gtfs-to-diagram/issues).
+Pull requests are welcome, as is feedback and [reporting issues](https://github.com/blinktaginc/gtfs-to-chart/issues).
 
 ### Tests
 

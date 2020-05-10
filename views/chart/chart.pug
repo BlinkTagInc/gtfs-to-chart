@@ -1,7 +1,7 @@
 include formatting_functions.pug
 
-<!-- Diagram generated on #{Date()} using GTFS-to-DIAGRAM version #{config.gtfsToDiagramVersion} -->
-.diagram-page
+<!-- Chart generated on #{Date()} using GTFS-to-Chart version #{config.gtfsToChartVersion} -->
+.chart-page
   .container
     .row.mt-4.mb-4
       .col-md-12
@@ -10,7 +10,7 @@ include formatting_functions.pug
             .route-color-swatch-large(style=`background-color: #${route.route_color}`)
           span= getRouteName(route)
 
-    .diagram(id="diagram")
+    .chart(id="chart")
       .row.mb-3
         .col-md-6
           .card
@@ -20,5 +20,5 @@ include formatting_functions.pug
               div Based on <a href="https://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey">E.J. Marey’s</a> graphical train schedule. Stations are positioned to scale so that slope encodes speed and can show where express trips pass non-express trips. Based on work by <a href="https://observablehq.com/@mbostock/mareys-trains">Mike Bostock</a>.
 
     ul.notes
-      each note in diagramData.notes
+      each note in chartData.notes
         li= note

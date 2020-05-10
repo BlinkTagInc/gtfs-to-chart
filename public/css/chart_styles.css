@@ -34,8 +34,3 @@ h3 {
     font-size: 15px;
   }
 }
-
-.overview-list {
-  overflow-y: scroll;
-  margin-bottom: 0;
-}

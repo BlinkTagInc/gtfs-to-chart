@@ -7,6 +7,7 @@ function parseTime(string) {
   if (date !== null && date.getUTCHours() < 3) {
     date.setUTCDate(date.getUTCDate() + 1);
   }
+
   return date;
 }
 
@@ -15,6 +16,20 @@ function padTimeRange(range) {
     moment(range[0]).startOf('hour'),
     moment(range[1]).add(30, 'minutes')
   ];
+}
+
+function formatStopTime(stop) {
+  const formatTime = d3.utcFormat('%-I:%M %p');
+  let formattedTime = '';
+
+  if (stop.type === 'arrival') {
+    formattedTime += 'Arrives at ';
+  } else if (stop.type === 'departure') {
+    formattedTime += 'Departs at ';
+  }
+
+  formattedTime += formatTime(stop.time);
+  return formattedTime;
 }
 
 function getPrimaryDirectionId(stations) {
@@ -107,8 +122,6 @@ function renderDiagram(data) {
     .voronoi([0, 0, width, height]);
 
   const tooltip = g => {
-    const formatTime = d3.utcFormat('%-I:%M %p');
-
     const tooltip = g.append('g')
       .style('font', '10px sans-serif');
 
@@ -142,7 +155,7 @@ function renderDiagram(data) {
         tooltip.style('display', null);
         line1.text(`Trip ${d.trip.number} to ${d.trip.trip_headsign}`);
         line2.text(d.stop.station.name);
-        line3.text(formatTime(d.stop.time));
+        line3.text(formatStopTime(d.stop));
         path.attr('stroke', 'rgb(34, 34, 34)');
         const box = text.node().getBBox();
         path.attr('d', `

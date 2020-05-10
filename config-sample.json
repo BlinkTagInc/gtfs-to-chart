@@ -8,5 +8,6 @@
   ],
   "beautify": false,
   "skipImport": false,
-  "templatePath": "views/diagram"
+  "templatePath": "views/diagram",
+  "diagramDate": "20200505"
 }

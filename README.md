@@ -47,6 +47,7 @@ All files starting with `config*.json` are .gitignored - so you can create multi
 | ------ | ---- | ----------- |
 | [`agencies`](#agencies) | array | An array of GTFS files to be imported. |
 | [`beautify`](#beautify) | boolean | Whether or not to beautify the HTML output. |
+| [`diagramDate`](#templatepath) | string | The date to use for generating the stringline chart. |
 | [`templatePath`](#templatepath) | string | Path to custom pug template for rendering diagram. |
 
 ### agencies
@@ -111,26 +112,20 @@ API along with your API token.
 }
 ```
 
-* Optionally specify a proj4 projection string to correct poorly formed coordinates in the GTFS file
-
-```
-{
-  "agencies": [
-    {
-      "agency_key": "myAgency",
-      "path": "/path/to/the/unzipped/gtfs/",
-      "proj": "+proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=2200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs"
-    }
-  ]
-}
-```
-
 ### beautify
 
 {Boolean} Whether or not to beautify the HTML output. Defaults to `false`.
 
 ```
     "beautify": false
+```
+
+### diagramDate
+
+{String} The date to use for generating digrams in YYYYMMDD format. Diagrams will be for service on this date. Defaults to today's date.
+
+```
+    "diagramDate": "20200505"
 ```
 
 

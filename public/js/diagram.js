@@ -7,6 +7,12 @@ function padTimeRange(range) {
   ]
 }
 
+function getPrimaryDirectionId(stations) {
+  const directionGroups = _.groupBy(stations, 'direction_id');
+  const largestDirectionGroup = _.maxBy(Object.values(directionGroups), group => group.length);
+  return largestDirectionGroup[0].direction_id;
+}
+
 function renderDiagram(data) {
   const {
     trips,
@@ -29,6 +35,7 @@ function renderDiagram(data) {
   const topMargin = 20 + _.max(_.map(stations, station => station.name.length)) * 4.6;
   const margin = ({top: topMargin, right: 30, bottom: topMargin, left: 50});
 
+  const primaryDirectionId = getPrimaryDirectionId(stations);
 
   const line = d3.line()
     .x(d => x(d.station.distance))
@@ -67,6 +74,7 @@ function renderDiagram(data) {
           .attr("x", 12)
           .attr("dy", "0.35em")
           .text(d => d.name))
+          .style("display", d => d.direction_id === primaryDirectionId ? 'block' : 'none')
       .call(g => g.append("text")
           .attr("text-anchor", "end")
           .attr("transform", `translate(0,${height - margin.top}) rotate(-90)`)
@@ -122,7 +130,7 @@ function renderDiagram(data) {
         .on("mouseout", () => tooltip.style("display", "none"))
         .on("mouseover", d => {
           tooltip.style("display", null);
-          line1.text(`${d.trip.number} to ${d.trip.trip_headsign}`);
+          line1.text(`Trip ${d.trip.number} to ${d.trip.trip_headsign}`);
           line2.text(d.stop.station.name);
           line3.text(formatTime(d.stop.time));
           path.attr("stroke", 'rgb(34, 34, 34)');
@@ -176,4 +184,4 @@ function renderDiagram(data) {
       .call(tooltip);
 }
 
-diagramData.map(renderDiagram);
+renderDiagram(diagramData);

@@ -5,9 +5,5 @@
       "agency_key": "bart",
       "url": "https://transitfeeds.com/p/bart/58/latest/download"
     }
-  ],
-  "beautify": false,
-  "skipImport": false,
-  "templatePath": "views/chart",
-  "chartDate": "20200505"
+  ]
 }

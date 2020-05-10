@@ -1,6 +1,15 @@
 /* global _, d3, moment, diagramData */
 /* eslint no-var: "off", prefer-arrow-callback: "off", no-unused-vars: "off" */
 
+function parseTime(string) {
+  const parseTime = d3.utcParse('%H:%M:%S');
+  const date = parseTime(string);
+  if (date !== null && date.getUTCHours() < 3) {
+    date.setUTCDate(date.getUTCDate() + 1);
+  }
+  return date;
+}
+
 function padTimeRange(range) {
   return [
     moment(range[0]).startOf('hour'),
@@ -23,12 +32,12 @@ function renderDiagram(data) {
 
   for (const trip of trips) {
     for (const stop of trip.stops) {
-      stop.time = new Date(stop.time);
+      stop.time = parseTime(stop.time);
     }
   }
 
   for (const stop of stops) {
-    stop.stop.time = new Date(stop.stop.time);
+    stop.stop.time = parseTime(stop.stop.time);
   }
 
   const height = 2400;

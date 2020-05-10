@@ -1,8 +1,28 @@
 # GTFS to Chart
 
-`gtfs-to-chart` creates stringline charts showing all vehicles on a transit route, based on E.J. Marey's graphical train schedule.
+`gtfs-to-chart` creates stringline charts showing all vehicles on a transit route from GTFS data.
 
-It uses code developed by [Mike Bostock](https://observablehq.com/@mbostock/mareys-trains) for vidualizing transit data in d3 and connects it to GTFS so that any transit route from any agency can be visualized.
+[E.J. Marey](https://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey) was the first person to propose this type of graphical train schedule.
+
+The chart generated shows stations across the x-axis, spaced to scale. Each line on the chart represents a transit vehicle moving through time. The slope of the line indicates speed at that point in the journey, with steeper slopes indicating slower speeds (as more time is passing as the vehicle moves). 
+
+For routes that operate in two directions, both are shown on the same chart. Lines sloping downwards are vehicles heading one way and lines sloping upwards are vehicles heading in the reverse direction. The point at which lines cross indicates the exact time and location where two vehicles heading in the opposite direction pass each other.
+
+If express service is offered on a route, the chart will show where express vehicles overtake non-express vehicles. This is shown where two lines sloped in the same direction cross.
+
+If a vehicle has a scheduled stop with a different departure time than arrival time, the line will be vertical for a short distance at the stop representing the dwell time at the stop.
+
+This library can be used to generate stringline charts for any transit agency that provides data in [GTFS format](https://developers.google.com/transit/gtfs/). To generate charts for a specific agency, just add the agency name and URL of the GTFS file in a `config.json` file as described below.
+
+Not all transit routes work well with this type of visualization.
+
+* Routes where not all trips follow the same pattern will not work well. For instance, a bus route that sometimes makes some different stops depending on the trip.
+* Routes where one direction follows a different pattern than the other. For instance, a bus route that takes a completely different route on the way back.
+* Circular routes do not currently work well, as the line jumps across the chart for the last stop.
+
+## Credits
+
+This library was based off of code developed by [Mike Bostock](https://observablehq.com/@mbostock/mareys-trains).
 
 ## Installation
 

@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const slashes = require("connect-slashes");
+const slashes = require('connect-slashes');
 
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs')
@@ -23,7 +23,7 @@ const configPath = path.join(process.cwd(), argv.configPath);
 const config = require(configPath);
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoUrl, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
+mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
 const app = express();
 

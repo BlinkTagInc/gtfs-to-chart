@@ -25,7 +25,6 @@
   "main": "index",
   "dependencies": {
     "chalk": "^4.0.0",
-    "cli-table": "^0.3.1",
     "connect-slashes": "^1.4.0",
     "d3-time-format": "^2.2.3",
     "express": "^4.17.1",
@@ -33,8 +32,8 @@
     "gtfs": "1.10.0",
     "js-beautify": "^1.11.0",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
-    "mongoose": "^5.9.10",
+    "moment": "^2.25.3",
+    "mongoose": "^5.9.13",
     "morgan": "^1.10.0",
     "progress": "^2.0.3",
     "pug": "^2.0.4",
@@ -45,7 +44,7 @@
     "yargs": "^15.3.1"
   },
   "devDependencies": {
-    "xo": "^0.29.1"
+    "xo": "^0.30.0"
   },
   "engines": {
     "node": ">= 12.14.0"
@@ -59,6 +58,10 @@
         {
           "properties": "never"
         }
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
       ]
     }
   },

@@ -23,7 +23,7 @@ router.get('/', async (request, response, next) => {
   try {
     const agencies = await gtfs.getAgencies();
     const sortedAgencies = _.sortBy(agencies, 'agency_name');
-    return response.render('agencies', {agencies: sortedAgencies});
+    return response.render('agencies', { agencies: sortedAgencies });
   } catch (error) {
     next(error);
   }
@@ -33,14 +33,14 @@ router.get('/', async (request, response, next) => {
  * Show all routes for an agency
  */
 router.get('/diagrams/:agencyKey', async (request, response, next) => {
-  const {agencyKey} = request.params;
+  const { agencyKey } = request.params;
 
   if (!agencyKey) {
     return next(new Error('No agencyKey provided'));
   }
 
   try {
-    const routes = await gtfs.getRoutes({ agency_key: agencyKey }, undefined, {lean: true});
+    const routes = await gtfs.getRoutes({ agency_key: agencyKey }, undefined, { lean: true });
     const html = await utils.generateOverviewHTML(agencyKey, routes, config);
     response.send(html);
   } catch (error) {
@@ -51,7 +51,7 @@ router.get('/diagrams/:agencyKey', async (request, response, next) => {
 /*
  * Show a specific diagram
  */
-router.get('/diagrams/:agencyKey/:routeId', async (request, response, next) => {
+router.get('/diagrams/:agencyKey/:routeId', async (request, response) => {
   const { agencyKey, routeId } = request.params;
 
   try {
@@ -59,7 +59,7 @@ router.get('/diagrams/:agencyKey/:routeId', async (request, response, next) => {
     const diagramHtml = await utils.generateDiagramHTML(routeId, agencyKey, date, config);
     response.send(diagramHtml);
   } catch (error) {
-    return response.render('error', { error }); 
+    return response.render('error', { error });
   }
 });
 

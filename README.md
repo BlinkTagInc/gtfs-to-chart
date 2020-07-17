@@ -20,6 +20,8 @@ Not all transit routes work well with this type of visualization.
 * Routes where one direction follows a different pattern than the other. For instance, a bus route that takes a completely different route on the way back.
 * Circular routes do not currently work well, as the line jumps across the chart for the last stop.
 
+Are you using `gtfs-to-chart`? Let us know via email (brendan@blinktag.com) or via opening a github issue or pull request if your agency is using this library.
+
 ## Credits
 
 This library was based off of code developed by [Mike Bostock](https://observablehq.com/@mbostock/mareys-trains).

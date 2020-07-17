@@ -9,6 +9,7 @@ include formatting_functions.pug
           if route.route_color
             .route-color-swatch-large(style=`background-color: #${route.route_color}`)
           span= getRouteName(route)
+        h3= moment(config.chartDate, 'YYYYMMDD').format('MMMM D, YYYY')
 
     .chart(id="chart")
       .row.mb-3
@@ -22,3 +23,6 @@ include formatting_functions.pug
     ul.notes
       each note in chartData.notes
         li= note
+
+    .row-mt-4.mb-4
+      a(href="https://github.com/BlinkTagInc/gtfs-to-chart") Created with GTFS-to-Chart

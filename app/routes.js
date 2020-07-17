@@ -55,8 +55,7 @@ router.get('/charts/:agencyKey/:routeId', async (request, response) => {
   const { agencyKey, routeId } = request.params;
 
   try {
-    const date = '20200505';
-    const html = await utils.generateChartHTML(routeId, agencyKey, date, config);
+    const html = await utils.generateChartHTML(routeId, agencyKey, config);
     response.send(html);
   } catch (error) {
     return response.render('error', { error });

@@ -6,6 +6,8 @@
 
 The chart generated shows stations across the x-axis, spaced to scale. Each line on the chart represents a transit vehicle moving through time. The slope of the line indicates speed at that point in the journey, with steeper slopes indicating slower speeds (as more time is passing as the vehicle moves). 
 
+<img width="598" alt="SFMTA 14R Stringline Chart" src="https://user-images.githubusercontent.com/96217/87837133-6753cd80-c847-11ea-9df6-5807dbec9b20.png">
+
 For routes that operate in two directions, both are shown on the same chart. Lines sloping downwards are vehicles heading one way and lines sloping upwards are vehicles heading in the reverse direction. The point at which lines cross indicates the exact time and location where two vehicles heading in the opposite direction pass each other.
 
 If express service is offered on a route, the chart will show where express vehicles overtake non-express vehicles. This is shown where two lines sloped in the same direction cross.

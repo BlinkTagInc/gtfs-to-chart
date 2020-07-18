@@ -2,12 +2,8 @@
 /* eslint no-var: "off", prefer-arrow-callback: "off", no-unused-vars: "off" */
 
 function parseTime(string) {
-  const parseTime = d3.utcParse('%H:%M:%S');
-  const date = parseTime(string);
-  if (date !== null && date.getUTCHours() < 3) {
-    date.setUTCDate(date.getUTCDate() + 1);
-  }
-
+  const timeParser = d3.utcParse('%H:%M:%S');
+  const date = timeParser(string);
   return date;
 }
 
@@ -18,17 +14,44 @@ function padTimeRange(range) {
   ];
 }
 
+function geStopsFromStoptimes(stoptimes, stations) {
+  return stoptimes.reduce((memo, stoptime) => {
+    const station = stations.find(station => station.stop_id === stoptime.stop_id);
+    if (stoptime.arrival_time === stoptime.departure_time) {
+      memo.push({
+        station,
+        time: parseTime(stoptime.arrival_time),
+        type: 'stop'
+      });
+    } else {
+      memo.push(
+        {
+          station,
+          time: parseTime(stoptime.arrival_time),
+          type: 'arrival'
+        }, {
+          station,
+          time: parseTime(stoptime.departure_time),
+          type: 'departure'
+        }
+      );
+    }
+
+    return memo;
+  }, []);
+}
+
 function formatStopTime(stop) {
-  const formatTime = d3.utcFormat('%-I:%M %p');
+  const timeFormatter = d3.utcFormat('%-I:%M %p');
   let formattedTime = '';
 
-  if (stop.type === 'arrival') {
+  if (stop.type === 'arrival') {  
     formattedTime += 'Arrives at ';
   } else if (stop.type === 'departure') {
     formattedTime += 'Departs at ';
   }
 
-  formattedTime += formatTime(stop.time);
+  formattedTime += timeFormatter(stop.time);
   return formattedTime;
 }
 
@@ -41,19 +64,20 @@ function getPrimaryDirectionId(stations) {
 function renderChart(data) {
   const {
     trips,
-    stations,
-    stops
+    stations
   } = data;
 
-  for (const trip of trips) {
-    for (const stop of trip.stops) {
-      stop.time = parseTime(stop.time);
-    }
-  }
+  const formattedTrips = trips.map(trip => ({
+    number: trip.trip_id,
+    direction: trip.direction_id,
+    trip_headsign: trip.trip_headsign,
+    stops: geStopsFromStoptimes(trip.stoptimes, stations)
+  }));
 
-  for (const stop of stops) {
-    stop.stop.time = parseTime(stop.stop.time);
-  }
+  const stops = formattedTrips.flatMap(trip => trip.stops.map(stop => ({
+    trip,
+    stop
+  })));
 
   const height = 2400;
   const width = 800;
@@ -186,7 +210,7 @@ function renderChart(data) {
   const vehicle = svg.append('g')
     .attr('stroke-width', 1.5)
     .selectAll('g')
-    .data(trips)
+    .data(formattedTrips)
     .join('g');
 
   vehicle.append('path')

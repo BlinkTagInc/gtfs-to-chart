@@ -1,5 +1,12 @@
 # GTFS to Chart
 
+[![NPM version](https://img.shields.io/npm/v/gtfs-to-chart.svg?style=flat)](https://www.npmjs.com/package/gtfs-to-chart)
+[![David](https://img.shields.io/david/blinktaginc/gtfs-to-chart.svg)]()
+[![npm](https://img.shields.io/npm/dm/gtfs-to-chart.svg?style=flat)]()
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+
+[![NPM](https://nodei.co/npm/gtfs-to-chart.png?downloads=true)](https://nodei.co/npm/gtfs-to-chart/)
+
 `gtfs-to-chart` creates stringline charts showing all vehicles on a transit route from GTFS data.
 
 [E.J. Marey](https://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey) was the first person to propose this type of graphical train schedule.

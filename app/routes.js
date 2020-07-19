@@ -41,7 +41,7 @@ router.get('/charts/:agencyKey', async (request, response, next) => {
 
   try {
     const routes = await gtfs.getRoutes({ agency_key: agencyKey }, undefined, { lean: true });
-    const html = await utils.generateOverviewHTML(agencyKey, routes, config);
+    const html = await utils.generateOverviewHTML(agencyKey, routes, { ...config, isLocal: true });
     response.send(html);
   } catch (error) {
     next(error);

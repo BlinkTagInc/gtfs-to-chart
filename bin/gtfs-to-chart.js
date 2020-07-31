@@ -29,7 +29,7 @@ const argv = require('yargs').usage('Usage: $0 --config ./config.json')
   .argv;
 
 const logUtils = require('../lib/log-utils');
-const gtfsToHtml = require('..');
+const gtfsToChart = require('..');
 
 function handleError(error) {
   const text = error || 'Unknown Error';
@@ -65,7 +65,7 @@ getConfig()
     mongoose.Promise = global.Promise;
     mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
-    await gtfsToHtml(config);
+    await gtfsToChart(config);
 
     process.exit();
   })

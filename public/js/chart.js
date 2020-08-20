@@ -15,6 +15,7 @@ function padTimeRange(range) {
 }
 
 function geStopsFromStoptimes(stoptimes, stations) {
+  /* eslint-disable-next-line unicorn/no-reduce */
   return stoptimes.reduce((memo, stoptime) => {
     const station = stations.find(station => station.stop_id === stoptime.stop_id);
     if (stoptime.arrival_time === stoptime.departure_time) {
@@ -45,7 +46,7 @@ function formatStopTime(stop) {
   const timeFormatter = d3.utcFormat('%-I:%M %p');
   let formattedTime = '';
 
-  if (stop.type === 'arrival') {  
+  if (stop.type === 'arrival') {
     formattedTime += 'Arrives at ';
   } else if (stop.type === 'departure') {
     formattedTime += 'Departs at ';

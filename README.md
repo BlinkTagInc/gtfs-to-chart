@@ -59,12 +59,8 @@ If you are using this as a node module as part of an application, you can includ
 ## Code example
 
     const gtfsToChart = require('gtfs-to-chart');
-    const mongoose = require('mongoose');
     const config = require('config.json');
-
-    mongoose.Promise = global.Promise;
-    mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
-
+  
     gtfsToChart(config)
     .then(() => {
       console.log('Chart Generation Successful');
@@ -179,10 +175,6 @@ API along with your API token.
 
 ## Running
 
-Ensure than MongoDB is running locally.
-
-    mongod
-
 To generate charts, run `gtfs-to-chart`.
 
     gtfs-to-chart
@@ -203,7 +195,7 @@ Allows specifying a configuration json file. Defaults to config.json in the curr
 
 `skipImport`
 
-Skips importing GTFS into MongoDB. Useful if you are rerunning with an unchanged GTFS file. If you use this option and the GTFS file hasn't been imported, you'll get an error.
+Skips importing GTFS into SQLite. Useful if you are rerunning with an unchanged GTFS file. If you use this option and the GTFS file hasn't been imported, you'll get an error.
 
     gtfs-to-chart --skipImport
 

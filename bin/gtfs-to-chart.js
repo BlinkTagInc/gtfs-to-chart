@@ -3,7 +3,6 @@
 const { resolve } = require('path');
 
 const fs = require('fs-extra');
-const mongoose = require('mongoose');
 
 // eslint-disable-next-line prefer-destructuring
 const argv = require('yargs').usage('Usage: $0 --config ./config.json')
@@ -62,9 +61,6 @@ const getConfig = async () => {
 
 getConfig()
   .then(async config => {
-    mongoose.Promise = global.Promise;
-    mongoose.connect(config.mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
-
     await gtfsToChart(config);
 
     process.exit();

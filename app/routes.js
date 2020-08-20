@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const gtfs = require('gtfs');
 const express = require('express');
 
@@ -13,35 +12,19 @@ config.assetPath = '/';
 config.log = console.log;
 config.logWarning = console.warn;
 config.logError = console.error;
+config.isLocal = true;
 
 const router = new express.Router();
 
+gtfs.openDb(config);
+
 /*
- * Show all agencies
+ * Show all routes
  */
 router.get('/', async (request, response, next) => {
   try {
-    const agencies = await gtfs.getAgencies();
-    const sortedAgencies = _.sortBy(agencies, 'agency_name');
-    return response.render('agencies', { agencies: sortedAgencies });
-  } catch (error) {
-    next(error);
-  }
-});
-
-/*
- * Show all routes for an agency
- */
-router.get('/charts/:agencyKey', async (request, response, next) => {
-  const { agencyKey } = request.params;
-
-  if (!agencyKey) {
-    return next(new Error('No agencyKey provided'));
-  }
-
-  try {
-    const routes = await gtfs.getRoutes({ agency_key: agencyKey }, undefined, { lean: true });
-    const html = await utils.generateOverviewHTML(agencyKey, routes, { ...config, isLocal: true });
+    const routes = await gtfs.getRoutes();
+    const html = await utils.generateOverviewHTML(config, routes);
     response.send(html);
   } catch (error) {
     next(error);
@@ -51,11 +34,11 @@ router.get('/charts/:agencyKey', async (request, response, next) => {
 /*
  * Show a specific chart
  */
-router.get('/charts/:agencyKey/:routeId', async (request, response) => {
-  const { agencyKey, routeId } = request.params;
+router.get('/charts/:routeId', async (request, response) => {
+  const { routeId } = request.params;
 
   try {
-    const html = await utils.generateChartHTML(routeId, agencyKey, config);
+    const html = await utils.generateChartHTML(config, routeId);
     response.send(html);
   } catch (error) {
     return response.render('error', { error });

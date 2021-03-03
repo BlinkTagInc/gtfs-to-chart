@@ -58,18 +58,20 @@ If you are using this as a node module as part of an application, you can includ
 
 ## Code example
 
-    const gtfsToChart = require('gtfs-to-chart');
-    const config = require('config.json');
-  
-    gtfsToChart(config)
-    .then(() => {
-      console.log('Chart Generation Successful');
-      process.exit();
-    })
-    .catch(err => {
-      console.error(err);
-      process.exit(1);
-    });
+```js
+const gtfsToChart = require('gtfs-to-chart');
+const config = require('config.json');
+
+gtfsToChart(config)
+.then(() => {
+  console.log('Chart Generation Successful');
+  process.exit();
+})
+.catch(err => {
+  console.error(err);
+  process.exit(1);
+});
+```
 
 ## Configuration
 
@@ -97,7 +99,7 @@ URL from the agency's website or you can use a URL generated from the transitfee
 API along with your API token.
 
 * Specify a download URL:
-```
+```json
 {
   "agencies": [
     {
@@ -109,7 +111,7 @@ API along with your API token.
 ```
 
 * Specify a path to a zipped GTFS file:
-```
+```json
 {
   "agencies": [
     {
@@ -120,7 +122,7 @@ API along with your API token.
 }
 ```
 * Specify a path to an unzipped GTFS file:
-```
+```json
 {
   "agencies": [
     {
@@ -133,7 +135,7 @@ API along with your API token.
 
 * Exclude files - if you don't want all GTFS files to be imported, you can specify an array of files to exclude.
 
-```
+```json
 {
   "agencies": [
     {
@@ -152,16 +154,16 @@ API along with your API token.
 
 {Boolean} Whether or not to beautify the HTML output. Defaults to `false`.
 
-```
-    "beautify": false
+```json
+"beautify": false
 ```
 
 ### chartDate
 
 {String} The date to use for generating charts in YYYYMMDD format. Charts will be for service on this date. Defaults to today's date.
 
-```
-    "chartDate": "20200505"
+```json
+"chartDate": "20200505"
 ```
 
 
@@ -169,8 +171,8 @@ API along with your API token.
 
 {String} Path to a folder containing (pug)[https://pugjs.org/] template for rendering charts. This is optional. Defaults to using the templates provided in `views/chart`. All files within the `/views/custom` folder will be .gitignored, so you can copy the `views/chart` folder to `views/custom/myagency` and make any modifications needed. Any custom views folder should conatain pug templates called `chart_page.pug` and  `overview_page.pug`.
 
-```
-    "templatePath": "views/custom/my-agency/"
+```json
+"templatePath": "views/custom/my-agency/"
 ```
 
 ## Running

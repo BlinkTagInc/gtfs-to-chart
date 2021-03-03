@@ -1,6 +1,6 @@
 {
   "name": "gtfs-to-chart",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Generate stringline charts of a transit routes from GTFS",
   "keywords": [
@@ -45,14 +45,14 @@
     "chalk": "^4.1.0",
     "connect-slashes": "^1.4.0",
     "express": "^4.17.1",
-    "fs-extra": "^9.0.1",
-    "gtfs": "^2.2.3",
-    "js-beautify": "^1.13.0",
-    "lodash": "^4.17.20",
+    "fs-extra": "^9.1.0",
+    "gtfs": "^2.4.2",
+    "js-beautify": "^1.13.5",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "progress": "^2.0.3",
-    "pug": "^3.0.0",
+    "pug": "^3.0.2",
     "sanitize-filename": "^1.6.3",
     "simplify-geojson": "^1.0.4",
     "sqlstring": "^2.3.2",
@@ -61,7 +61,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "xo": "^0.36.1"
+    "xo": "^0.38.2"
   },
   "engines": {
     "node": ">= 12.14.0"

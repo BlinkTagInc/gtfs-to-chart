@@ -15,7 +15,7 @@ function padTimeRange(range) {
 }
 
 function geStopsFromStoptimes(stoptimes, stations) {
-  /* eslint-disable-next-line unicorn/no-reduce */
+  /* eslint-disable-next-line unicorn/no-array-reduce */
   return stoptimes.reduce((memo, stoptime) => {
     const station = stations.find(station => station.stop_id === stoptime.stop_id);
     if (stoptime.arrival_time === stoptime.departure_time) {

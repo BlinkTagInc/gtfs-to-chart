@@ -1,1 +1,1 @@
-module.exports = require('./lib/gtfs-to-chart');
+export { default } from './lib/gtfs-to-chart.js';

@@ -59,8 +59,9 @@ If you are using this as a node module as part of an application, you can includ
 ## Code example
 
 ```js
-const gtfsToChart = require('gtfs-to-chart');
-const config = require('config.json');
+import gtfsToChart from 'gtfs-to-chart';
+import { readFile } from 'fs/promises';
+const config = JSON.parse(await readFile(new URL('./config.json', import.meta.url)));
 
 gtfsToChart(config)
 .then(() => {

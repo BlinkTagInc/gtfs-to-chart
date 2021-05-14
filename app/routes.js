@@ -1,11 +1,12 @@
-const gtfs = require('gtfs');
-const express = require('express');
+import { readFileSync } from 'node:fs';
 
-const utils = require('../lib/utils');
+import { openDb, getRoutes } from 'gtfs';
+import express from 'express';
 
-const selectedConfig = require('../config');
+import { setDefaultConfig, generateOverviewHTML, generateChartHTML } from '../lib/utils.js';
 
-const config = utils.setDefaultConfig(selectedConfig);
+const selectedConfig = JSON.parse(readFileSync(new URL('../config.json', import.meta.url)));
+const config = setDefaultConfig(selectedConfig);
 // Override noHead config option so full HTML pages are generated
 config.noHead = false;
 config.assetPath = '/';
@@ -16,15 +17,15 @@ config.isLocal = true;
 
 const router = new express.Router();
 
-gtfs.openDb(config);
+openDb(config);
 
 /*
  * Show all routes
  */
 router.get('/', async (request, response, next) => {
   try {
-    const routes = await gtfs.getRoutes();
-    const html = await utils.generateOverviewHTML(config, routes);
+    const routes = await getRoutes();
+    const html = await generateOverviewHTML(config, routes);
     response.send(html);
   } catch (error) {
     next(error);
@@ -38,11 +39,11 @@ router.get('/charts/:routeId', async (request, response) => {
   const { routeId } = request.params;
 
   try {
-    const html = await utils.generateChartHTML(config, routeId);
+    const html = await generateChartHTML(config, routeId);
     response.send(html);
   } catch (error) {
     return response.render('error', { error });
   }
 });
 
-module.exports = router;
+export default router;

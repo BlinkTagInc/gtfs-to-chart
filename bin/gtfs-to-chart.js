@@ -1,11 +1,17 @@
 #!/usr/bin/env node
 
-const { resolve } = require('path');
+import path from 'node:path';
+import { readFile } from 'node:fs/promises';
 
-const fs = require('fs-extra');
+import yargs from 'yargs';
+/* eslint-disable-next-line node/file-extension-in-import */
+import { hideBin } from 'yargs/helpers';
 
-// eslint-disable-next-line prefer-destructuring
-const argv = require('yargs').usage('Usage: $0 --config ./config.json')
+import { formatError } from '../lib/log-utils.js';
+import gtfsToChart from '../index.js';
+
+const { argv } = yargs(hideBin(process.argv))
+  .usage('Usage: $0 --config ./config.json')
   .help()
   .option('c', {
     alias: 'configPath',
@@ -24,20 +30,16 @@ const argv = require('yargs').usage('Usage: $0 --config ./config.json')
     describe: 'Show only stops with a `timepoint` value in `stops.txt`',
     type: 'boolean'
   })
-  .default('showOnlyTimepoint', undefined)
-  .argv;
-
-const logUtils = require('../lib/log-utils');
-const gtfsToChart = require('..');
+  .default('showOnlyTimepoint', undefined);
 
 function handleError(error) {
   const text = error || 'Unknown Error';
-  process.stdout.write(`\n${logUtils.formatError(text)}\n`);
+  process.stdout.write(`\n${formatError(text)}\n`);
   throw error;
 }
 
 const getConfig = async () => {
-  const data = await fs.readFile(resolve(argv.configPath), 'utf8').catch(() => {
+  const data = await readFile(path.resolve(argv.configPath), 'utf8').catch(() => {
     throw new Error(`Cannot find configuration file at \`${argv.configPath}\`. Use config-sample.json as a starting point, pass --configPath option`);
   });
 

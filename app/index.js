@@ -1,19 +1,20 @@
-const path = require('path');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const express = require('express');
-const logger = require('morgan');
-const slashes = require('connect-slashes');
+import express from 'express';
+import logger from 'morgan';
+import slashes from 'connect-slashes';
 
-const routes = require('./routes');
+import routes from './routes.js';
 
 const app = express();
 
 // View engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(fileURLToPath(import.meta.url), '../views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(fileURLToPath(import.meta.url), '../../public')));
 app.use(slashes());
 
 app.use('/', routes);

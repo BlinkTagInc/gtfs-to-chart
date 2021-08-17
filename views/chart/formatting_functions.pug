@@ -6,15 +6,15 @@
     } = route;
     let routeName = '';
 
-    if (shortName !== '' && shortName !== undefined) {
+    if (shortName !== '' && shortName !== null) {
       routeName += shortName;
     }
 
-    if (shortName !== '' && shortName !== undefined && longName !== '' && longName !== undefined) {
+    if (shortName !== '' && shortName !== null && longName !== '' && longName !== null) {
       routeName += ' - ';
     }
 
-    if (longName !== '' && longName !== undefined) {
+    if (longName !== '' && longName !== null) {
       routeName += longName;
     }
     

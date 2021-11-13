@@ -1,11 +1,23 @@
-# GTFS to Chart
+<p align="center">
+  ➡️
+  <a href="#installation">Installation</a> |
+  <a href="#quick-start">Quick Start</a> |
+  <a href="#configuration">Configuration</a>
+  ⬅️
+  <br /><br />
+  <img src="docs/images/gtfs-to-chart-logo.svg" alt="GTFS-to-Chart" />
+  <br /><br />
+  <a href="https://www.npmjs.com/package/gtfs-to-chart" rel="nofollow"><img src="https://img.shields.io/npm/v/gtfs-to-chart.svg?style=flat" style="max-width: 100%;"></a>
+  <a href="https://www.npmjs.com/package/gtfs-to-chart" rel="nofollow"><img src="https://img.shields.io/npm/dm/gtfs-to-chart.svg?style=flat" style="max-width: 100%;"></a>
+  <a href="https://github.com/BlinkTagInc/gtfs-to-chart/actions?query=workflow%3A%22Node+CI%22"><img src="https://img.shields.io/github/workflow/status/BlinkTagInc/gtfs-to-chart/Node%20CI.svg" alt="CircleCI" style="max-width: 100%;"></a>
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  <br /><br />
+  Generate stringline charts from GTFS transit data.
+  <br /><br />
+  <a href="https://nodei.co/npm/gtfs-to-chart/" rel="nofollow"><img src="https://nodei.co/npm/gtfs-to-chart.png?downloads=true" alt="NPM" style="max-width: 100%;"></a>
+</p>
 
-[![NPM version](https://img.shields.io/npm/v/gtfs-to-chart.svg?style=flat)](https://www.npmjs.com/package/gtfs-to-chart)
-[![David](https://img.shields.io/david/blinktaginc/gtfs-to-chart.svg)]()
-[![npm](https://img.shields.io/npm/dm/gtfs-to-chart.svg?style=flat)]()
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
-
-[![NPM](https://nodei.co/npm/gtfs-to-chart.png?downloads=true)](https://nodei.co/npm/gtfs-to-chart/)
+<hr>
 
 `gtfs-to-chart` creates stringline charts showing all vehicles on a transit route from GTFS data.
 
@@ -52,11 +64,13 @@ If you would like to use this library as a command-line utility, you can install
 
 If you are using this as a node module as part of an application, you can include it in your project's `package.json` file.
 
-## Command-line example
+## Quick Start
+
+### Command-line example
 
     gtfs-to-chart --configPath /path/to/your/custom-config.json
 
-## Code example
+### Code example
 
 ```js
 import gtfsToChart from 'gtfs-to-chart';

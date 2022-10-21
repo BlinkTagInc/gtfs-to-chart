@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - Dependency updates
 
+### Fixed
+- Fixed charts path in generated index.html
+
 ## [2.0.1] - 2021-08-17
 ### Updated
 - Dependency updates

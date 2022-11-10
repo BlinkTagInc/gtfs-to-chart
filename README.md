@@ -9,7 +9,6 @@
   <br /><br />
   <a href="https://www.npmjs.com/package/gtfs-to-chart" rel="nofollow"><img src="https://img.shields.io/npm/v/gtfs-to-chart.svg?style=flat" style="max-width: 100%;"></a>
   <a href="https://www.npmjs.com/package/gtfs-to-chart" rel="nofollow"><img src="https://img.shields.io/npm/dm/gtfs-to-chart.svg?style=flat" style="max-width: 100%;"></a>
-  <a href="https://github.com/BlinkTagInc/gtfs-to-chart/actions?query=workflow%3A%22Node+CI%22"><img src="https://img.shields.io/github/workflow/status/BlinkTagInc/gtfs-to-chart/Node%20CI.svg" alt="CircleCI" style="max-width: 100%;"></a>
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg">
   <br /><br />
   Generate stringline charts from GTFS transit data.
@@ -100,7 +99,7 @@ All files starting with `config*.json` are .gitignored - so you can create multi
 | ------ | ---- | ----------- |
 | [`agencies`](#agencies) | array | An array of GTFS files to be imported. |
 | [`beautify`](#beautify) | boolean | Whether or not to beautify the HTML output. |
-| [`chartDate`](#templatepath) | string | The date to use for generating the stringline chart. |
+| [`chartDate`](#chartdate) | string | The date to use for generating the stringline chart. |
 | [`templatePath`](#templatepath) | string | Path to custom pug template for rendering chart html. |
 
 ### agencies

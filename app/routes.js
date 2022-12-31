@@ -24,7 +24,7 @@ openDb(config);
  */
 router.get('/', async (request, response, next) => {
   try {
-    const routes = await getRoutes();
+    const routes = getRoutes();
     const html = await generateOverviewHTML(config, routes);
     response.send(html);
   } catch (error) {

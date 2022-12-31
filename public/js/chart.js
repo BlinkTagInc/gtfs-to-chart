@@ -15,9 +15,8 @@ function padTimeRange(range) {
 }
 
 function geStopsFromStoptimes(stoptimes, stations) {
-  /* eslint-disable-next-line unicorn/no-array-reduce */
   return stoptimes.reduce((memo, stoptime) => {
-    const station = stations.find(station => station.stop_id === stoptime.stop_id);
+    const station = stations.find((station) => station.stop_id === stoptime.stop_id);
     if (stoptime.arrival_time === stoptime.departure_time) {
       memo.push({
         station,
@@ -58,7 +57,7 @@ function formatStopTime(stop) {
 
 function getPrimaryDirectionId(stations) {
   const directionGroups = _.groupBy(stations, 'direction_id');
-  const largestDirectionGroup = _.maxBy(Object.values(directionGroups), group => group.length);
+  const largestDirectionGroup = _.maxBy(Object.values(directionGroups), (group) => group.length);
   return largestDirectionGroup[0].direction_id;
 }
 
@@ -68,85 +67,85 @@ function renderChart(data) {
     stations
   } = data;
 
-  const formattedTrips = trips.map(trip => ({
+  const formattedTrips = trips.map((trip) => ({
     number: trip.trip_id,
     direction: trip.direction_id,
     trip_headsign: trip.trip_headsign,
     stops: geStopsFromStoptimes(trip.stoptimes, stations)
   }));
 
-  const stops = formattedTrips.flatMap(trip => trip.stops.map(stop => ({
+  const stops = formattedTrips.flatMap((trip) => trip.stops.map((stop) => ({
     trip,
     stop
   })));
 
   const height = 2400;
   const width = 800;
-  const topMargin = 20 + (_.max(_.map(stations, station => station.name.length)) * 4.6);
+  const topMargin = 20 + (_.max(_.map(stations, (station) => station.name.length)) * 4.6);
   const margin = ({ top: topMargin, right: 30, bottom: topMargin, left: 50 });
 
   const primaryDirectionId = getPrimaryDirectionId(stations);
 
   const line = d3.line()
-    .x(d => x(d.station.distance))
-    .y(d => y(d.time));
+    .x((d) => x(d.station.distance))
+    .y((d) => y(d.time));
 
   const x = d3.scaleLinear()
-    .domain(d3.extent(stations, d => d.distance))
+    .domain(d3.extent(stations, (d) => d.distance))
     .range([margin.left + 10, width - margin.right]);
 
   const y = d3.scaleUtc()
-    .domain(padTimeRange(d3.extent(stops, s => s.stop.time)))
+    .domain(padTimeRange(d3.extent(stops, (s) => s.stop.time)))
     .range([margin.top, height - margin.bottom]);
 
-  const xAxis = g => g
+  const xAxis = (g) => g
     .style('font', '10px sans-serif')
     .selectAll('g')
     .data(stations)
     .join('g')
-    .attr('transform', d => `translate(${x(d.distance)},0)`)
-    .call(g => g.append('line')
+    .attr('transform', (d) => `translate(${x(d.distance)},0)`)
+    .call((g) => g.append('line')
       .attr('y1', margin.top - 6)
       .attr('y2', margin.top)
       .attr('stroke', 'currentColor'))
-    .call(g => g.append('line')
+    .call((g) => g.append('line')
       .attr('y1', height - margin.bottom + 6)
       .attr('y2', height - margin.bottom)
       .attr('stroke', 'currentColor'))
-    .call(g => g.append('line')
+    .call((g) => g.append('line')
       .attr('y1', margin.top)
       .attr('y2', height - margin.bottom)
       .attr('stroke-opacity', 0.2)
       .attr('stroke-dasharray', '1.5,2')
       .attr('stroke', 'currentColor'))
-    .call(g => g.append('text')
+    .call((g) => g.append('text')
       .attr('transform', `translate(0,${margin.top}) rotate(-90)`)
       .attr('x', 12)
       .attr('dy', '0.35em')
-      .text(d => d.name))
-    .style('display', d => d.direction_id === primaryDirectionId ? 'block' : 'none')
-    .call(g => g.append('text')
+      .text((d) => d.name))
+    .style('display', (d) => d.direction_id === primaryDirectionId ? 'block' : 'none')
+    .call((g) => g.append('text')
       .attr('text-anchor', 'end')
       .attr('transform', `translate(0,${height - margin.top}) rotate(-90)`)
       .attr('x', -12)
       .attr('dy', '0.35em')
-      .text(d => d.name));
+      .text((d) => d.name));
 
-  const yAxis = g => g
+  const yAxis = (g) => g
     .attr('transform', `translate(${margin.left},0)`)
     .call(d3.axisLeft(y)
       .ticks(d3.utcHour)
       .tickFormat(d3.utcFormat('%-I %p')))
-    .call(g => g.select('.domain').remove())
-    .call(g => g.selectAll('.tick line').clone().lower()
+    .call((g) => g.select('.domain').remove())
+    .call((g) => g.selectAll('.tick line').clone().lower()
       .attr('stroke-opacity', 0.2)
       .attr('x2', width));
 
   const voronoi = d3.Delaunay
-    .from(stops, d => x(d.stop.station.distance), d => y(d.stop.time))
+    .from(stops, (d) => x(d.stop.station.distance), (d) => y(d.stop.time))
     .voronoi([0, 0, width, height]);
 
-  const tooltip = g => {
+  const tooltip = (g) => {
     const tooltip = g.append('g')
       .style('font', '10px sans-serif');
 
@@ -176,7 +175,7 @@ function renderChart(data) {
       .join('path')
       .attr('d', (d, i) => voronoi.renderCell(i))
       .on('mouseout', () => tooltip.style('display', 'none'))
-      .on('mouseover', d => {
+      .on('mouseover', (d) => {
         tooltip.style('display', null);
         line1.text(`Trip ${d.trip.number} to ${d.trip.trip_headsign}`);
         line2.text(d.stop.station.name);
@@ -216,16 +215,16 @@ function renderChart(data) {
 
   vehicle.append('path')
     .attr('fill', 'none')
-    .attr('stroke', d => 'rgb(34, 34, 34)')
-    .attr('d', d => line(d.stops));
+    .attr('stroke', (d) => 'rgb(34, 34, 34)')
+    .attr('d', (d) => line(d.stops));
 
   vehicle.append('g')
     .attr('stroke', 'white')
-    .attr('fill', d => 'rgb(34, 34, 34)')
+    .attr('fill', (d) => 'rgb(34, 34, 34)')
     .selectAll('circle')
-    .data(d => d.stops)
+    .data((d) => d.stops)
     .join('circle')
-    .attr('transform', d => `translate(${x(d.station.distance)},${y(d.time)})`)
+    .attr('transform', (d) => `translate(${x(d.station.distance)},${y(d.time)})`)
     .attr('r', 2.5);
 
   svg.append('g')

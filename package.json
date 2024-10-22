@@ -1,6 +1,6 @@
 {
   "name": "gtfs-to-chart",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "private": false,
   "description": "Generate stringline charts of a transit routes from GTFS",
   "keywords": [
@@ -14,7 +14,9 @@
   "bugs": {
     "url": "https://github.com/blinktaginc/gtfs-to-chart/issues"
   },
-  "repository": "git://github.com/blinktaginc/gtfs-to-chart",
+  "repository": {
+    "url": "https://github.com/BlinkTagInc/gtfs-to-chart.git"
+  },
   "license": "MIT",
   "author": "Brendan Nee <brendan@blinktag.com>",
   "type": "module",

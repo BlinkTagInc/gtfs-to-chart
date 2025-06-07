@@ -1,6 +1,6 @@
 {
   "name": "gtfs-to-chart",
-  "version": "2.0.12",
+  "version": "2.1.0",
   "private": false,
   "description": "Generate stringline charts of a transit routes from GTFS",
   "keywords": [

@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
-import logger from 'morgan';
 import slashes from 'connect-slashes';
 
 import routes from './routes.js';
@@ -13,8 +12,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'pug');
 
+// Logging middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
 // Middleware
-app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(slashes());
 

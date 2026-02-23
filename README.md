@@ -22,18 +22,17 @@
 
 [E.J. Marey](https://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey) was the first person to propose this type of graphical train schedule.
 
-The chart generated shows stations across the x-axis, spaced to scale. Each line on the chart represents a transit vehicle moving through time. The slope of the line indicates speed at that point in the journey, with steeper slopes indicating slower speeds (as more time is passing as the vehicle moves). 
+The chart generated shows stations across the x-axis, spaced to scale. Each line on the chart represents a transit vehicle moving through time. The slope of the line indicates speed at that point in the journey, with steeper slopes indicating slower speeds (as more time is passing as the vehicle moves).
 
 <img width="598" alt="SFMTA 14R Stringline Chart" src="https://user-images.githubusercontent.com/96217/87837133-6753cd80-c847-11ea-9df6-5807dbec9b20.png">
 
-Try out some live interactive charts created  with GTFS-to-chart:
+Try out some live interactive charts created with GTFS-to-chart:
 
-* [SFMTA Route 14R Pre-COVID-19](https://gtfs-charts.brendannee.vercel.app/sfmta-2020-03-10/14R.html)
-* [SFMTA Route 14R Post-COVID-19](https://gtfs-charts.brendannee.vercel.app/sfmta-2020-07-21/14R.html)
+- [SFMTA Route 14R Pre-COVID-19](https://gtfs-charts.blinktag.com/sfmta-2020-03-10/14R.html)
+- [SFMTA Route 14R Post-COVID-19](https://gtfs-charts.blinktag.com/sfmta-2020-07-21/14R.html)
 
-* [SacRT Blue line Pre-COVID-19](https://gtfs-charts.brendannee.vercel.app/sacrt-2020-03-10/Blue.html)
-* [SacRT Blue line Post-COVID-19](https://gtfs-charts.brendannee.vercel.app/sacrt-2020-07-21/Blue.html)
-
+- [SacRT Blue line Pre-COVID-19](https://gtfs-charts.blinktag.com/sacrt-2020-03-10/Blue.html)
+- [SacRT Blue line Post-COVID-19](https://gtfs-charts.blinktag.com/sacrt-2020-07-21/Blue.html)
 
 For routes that operate in two directions, both are shown on the same chart. Lines sloping downwards are vehicles heading one way and lines sloping upwards are vehicles heading in the reverse direction. The point at which lines cross indicates the exact time and location where two vehicles heading in the opposite direction pass each other.
 
@@ -45,9 +44,9 @@ This library can be used to generate stringline charts for any transit agency th
 
 Not all transit routes work well with this type of visualization.
 
-* Routes where not all trips follow the same pattern will not work well. For instance, a bus route that sometimes makes some different stops depending on the trip.
-* Routes where one direction follows a different pattern than the other. For instance, a bus route that takes a completely different route on the way back.
-* Circular routes do not currently work well, as the line jumps across the chart for the last stop.
+- Routes where not all trips follow the same pattern will not work well. For instance, a bus route that sometimes makes some different stops depending on the trip.
+- Routes where one direction follows a different pattern than the other. For instance, a bus route that takes a completely different route on the way back.
+- Circular routes do not currently work well, as the line jumps across the chart for the last stop.
 
 Are you using `gtfs-to-chart`? Let us know via email (brendan@blinktag.com) or via opening a github issue or pull request if your agency is using this library.
 
@@ -74,17 +73,19 @@ If you are using this as a node module as part of an application, you can includ
 ```js
 import gtfsToChart from 'gtfs-to-chart';
 import { readFile } from 'fs/promises';
-const config = JSON.parse(await readFile(new URL('./config.json', import.meta.url)));
+const config = JSON.parse(
+  await readFile(new URL('./config.json', import.meta.url)),
+);
 
 gtfsToChart(config)
-.then(() => {
-  console.log('Chart Generation Successful');
-  process.exit();
-})
-.catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+  .then(() => {
+    console.log('Chart Generation Successful');
+    process.exit();
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 ```
 
 ## Configuration
@@ -95,12 +96,12 @@ Copy `config-sample.json` to `config.json` and then add your projects configurat
 
 All files starting with `config*.json` are .gitignored - so you can create multiple configuration files such as `config-caltrain.json`.
 
-| option | type | description |
-| ------ | ---- | ----------- |
-| [`agencies`](#agencies) | array | An array of GTFS files to be imported. |
-| [`beautify`](#beautify) | boolean | Whether or not to beautify the HTML output. |
-| [`chartDate`](#chartdate) | string | The date to use for generating the stringline chart. |
-| [`templatePath`](#templatepath) | string | Path to custom pug template for rendering chart html. |
+| option                          | type    | description                                           |
+| ------------------------------- | ------- | ----------------------------------------------------- |
+| [`agencies`](#agencies)         | array   | An array of GTFS files to be imported.                |
+| [`beautify`](#beautify)         | boolean | Whether or not to beautify the HTML output.           |
+| [`chartDate`](#chartdate)       | string  | The date to use for generating the stringline chart.  |
+| [`templatePath`](#templatepath) | string  | Path to custom pug template for rendering chart html. |
 
 ### agencies
 
@@ -112,7 +113,8 @@ To find an agency's GTFS file, visit [transitfeeds.com](http://transitfeeds.com)
 URL from the agency's website or you can use a URL generated from the transitfeeds.com
 API along with your API token.
 
-* Specify a download URL:
+- Specify a download URL:
+
 ```json
 {
   "agencies": [
@@ -124,7 +126,8 @@ API along with your API token.
 }
 ```
 
-* Specify a path to a zipped GTFS file:
+- Specify a path to a zipped GTFS file:
+
 ```json
 {
   "agencies": [
@@ -135,7 +138,9 @@ API along with your API token.
   ]
 }
 ```
-* Specify a path to an unzipped GTFS file:
+
+- Specify a path to an unzipped GTFS file:
+
 ```json
 {
   "agencies": [
@@ -147,7 +152,7 @@ API along with your API token.
 }
 ```
 
-* Exclude files - if you don't want all GTFS files to be imported, you can specify an array of files to exclude.
+- Exclude files - if you don't want all GTFS files to be imported, you can specify an array of files to exclude.
 
 ```json
 {
@@ -155,10 +160,7 @@ API along with your API token.
     {
       "agency_key": "myAgency",
       "path": "/path/to/the/unzipped/gtfs/",
-      "exclude": [
-        "shapes",
-        "stops"
-      ]
+      "exclude": ["shapes", "stops"]
     }
   ]
 }
@@ -180,10 +182,9 @@ API along with your API token.
 "chartDate": "20200505"
 ```
 
-
 ### templatePath
 
-{String} Path to a folder containing (pug)[https://pugjs.org/] template for rendering charts. This is optional. Defaults to using the templates provided in `views/chart`. All files within the `/views/custom` folder will be .gitignored, so you can copy the `views/chart` folder to `views/custom/myagency` and make any modifications needed. Any custom views folder should conatain pug templates called `chart_page.pug` and  `overview_page.pug`.
+{String} Path to a folder containing (pug)[https://pugjs.org/] template for rendering charts. This is optional. Defaults to using the templates provided in `views/chart`. All files within the `/views/custom` folder will be .gitignored, so you can copy the `views/chart` folder to `views/custom/myagency` and make any modifications needed. Any custom views folder should conatain pug templates called `chart_page.pug` and `overview_page.pug`.
 
 ```json
 "templatePath": "views/custom/my-agency/"
@@ -199,7 +200,7 @@ By default, `gtfs-to-chart` will look for a `config.json` file in the project ro
 
     gtfs-to-chart --configPath /path/to/your/custom-config.json
 
-This will download the GTFS file specified in `config.js` .  Then, `gtfs-to-chart` will build the HTML charts and save them in `charts/:agency_key`.
+This will download the GTFS file specified in `config.js` . Then, `gtfs-to-chart` will build the HTML charts and save them in `charts/:agency_key`.
 
 ### Options
 
@@ -228,4 +229,3 @@ Pull requests are welcome, as is feedback and [reporting issues](https://github.
 ### Tests
 
     npm test
-

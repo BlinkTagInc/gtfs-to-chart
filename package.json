@@ -25,34 +25,35 @@
     "gtfs-to-chart": "bin/gtfs-to-chart.js"
   },
   "scripts": {
-    "start": "node ./app",
-    "prepare": "husky"
+    "start": "node app/index.js",
+    "prepare": "husky",
+    "test": "node --test test/*.test.js",
+    "check": "node scripts/check.js"
   },
   "dependencies": {
     "better-copy": "^1.0.4",
-    "chalk": "^5.6.2",
+    "chalk": "^6.0.1",
     "connect-slashes": "^1.4.0",
-    "express": "^5.2.1",
-    "gtfs": "^4.18.3",
-    "js-beautify": "^1.15.4",
-    "lodash-es": "^4.17.23",
-    "moment": "^2.30.1",
+    "express": "^5.3.0",
+    "gtfs": "5.0.0-beta.0",
+    "js-beautify": "^2.0.3",
+    "lodash-es": "^4.18.1",
+    "moment": "^2.31.0",
     "progress": "^2.0.3",
-    "pug": "^3.0.3",
-    "sanitize-filename": "^1.6.3",
+    "pug": "^3.0.4",
+    "sanitize-filename": "^1.6.4",
     "simplify-geojson": "^1.0.5",
-    "sqlstring": "^2.3.3",
     "timer-machine": "^1.1.0",
     "untildify": "^6.0.0",
-    "yargs": "^18.0.0"
+    "yargs": "^18.2.0"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "prettier": "^3.8.1"
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10"
   },
   "engines": {
-    "node": ">= 22"
+    "node": "^22.18.0 || >=24.0.0"
   },
   "release-it": {
     "github": {
@@ -70,5 +71,8 @@
   "lint-staged": {
     "*.json": "prettier --write",
     "*.{js,css,md}": "prettier --write"
+  },
+  "allowScripts": {
+    "better-sqlite3": true
   }
 }

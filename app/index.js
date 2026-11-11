@@ -3,7 +3,41 @@ import { fileURLToPath } from 'node:url';
 import express from 'express';
 import slashes from 'connect-slashes';
 
-import routes from './routes.js';
+import { readFileSync } from 'node:fs';
+import { createRouter } from './routes.js';
+import { createGtfs } from '../lib/gtfs.js';
+import { setDefaultConfig } from '../lib/utils.js';
+
+const config = setDefaultConfig(
+  JSON.parse(readFileSync(new URL('../config.json', import.meta.url))),
+);
+Object.assign(config, {
+  skipImport: true,
+  noHead: false,
+  assetPath: '/',
+  isLocal: true,
+});
+const gtfs = createGtfs(config);
+try {
+  const inspection = await gtfs.schema.validate();
+  if (!inspection.compatible) {
+    throw new Error(
+      'Incompatible or missing v5 database schema; import the original feeds into a fresh database first',
+    );
+  }
+  // Fail at startup if the database has not been imported.
+  for (const agency of config.agencies) {
+    const rows = await gtfs.schedule.agency
+      .where({ source_id: agency.sourceId })
+      .all();
+    if (rows.length === 0) {
+      throw new Error(`No imported data for ${agency.sourceId}`);
+    }
+  }
+} catch (error) {
+  await gtfs.close();
+  throw error;
+}
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -23,7 +57,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(slashes());
 
 // Routes
-app.use('/', routes);
+app.use('/', createRouter(gtfs, config));
 
 // Error handlers
 app.use((request, response) => {
@@ -71,3 +105,16 @@ app.set('port', port);
 const server = app.listen(port, () => {
   console.log(`Express server listening on port ${server.address().port}`);
 });
+
+server.on('error', async (error) => {
+  await gtfs.close();
+  console.error(error);
+  process.exitCode = 1;
+});
+for (const signal of ['SIGINT', 'SIGTERM']) {
+  process.once(signal, () => {
+    server.close(async () => {
+      await gtfs.close();
+    });
+  });
+}

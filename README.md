@@ -107,11 +107,7 @@ All files starting with `config*.json` are .gitignored - so you can create multi
 
 {Array} Specify the GTFS files to be imported in an `agencies` array. GTFS files can be imported via a `url` or a local `path`.
 
-Each file needs an `agency_key`, a short name you create that is specific to that GTFS file. For GTFS files that contain more than one agency, you only need to list each GTFS file once in the `agencies` array, not once per agency that it contains.
-
-To find an agency's GTFS file, visit [transitfeeds.com](http://transitfeeds.com). You can use the
-URL from the agency's website or you can use a URL generated from the transitfeeds.com
-API along with your API token.
+Each file needs a `sourceId`, a short name you create that is specific to that GTFS file. For GTFS files that contain more than one agency, you only need to list each GTFS file once in the `agencies` array, not once per agency that it contains.
 
 - Specify a download URL:
 
@@ -119,8 +115,8 @@ API along with your API token.
 {
   "agencies": [
     {
-      "agency_key": "county-connection",
-      "url": "http://cccta.org/GTFS/google_transit.zip"
+      "sourceId": "caltrain",
+      "url": "https://data.trilliumtransit.com/gtfs/caltrain-ca-us/caltrain-ca-us.zip"
     }
   ]
 }
@@ -132,7 +128,7 @@ API along with your API token.
 {
   "agencies": [
     {
-      "agency_key": "myAgency",
+      "sourceId": "myAgency",
       "path": "/path/to/the/gtfs.zip"
     }
   ]
@@ -145,7 +141,7 @@ API along with your API token.
 {
   "agencies": [
     {
-      "agency_key": "myAgency",
+      "sourceId": "myAgency",
       "path": "/path/to/the/unzipped/gtfs/"
     }
   ]
@@ -158,7 +154,7 @@ API along with your API token.
 {
   "agencies": [
     {
-      "agency_key": "myAgency",
+      "sourceId": "myAgency",
       "path": "/path/to/the/unzipped/gtfs/",
       "exclude": ["shapes", "stops"]
     }
@@ -200,7 +196,7 @@ By default, `gtfs-to-chart` will look for a `config.json` file in the project ro
 
     gtfs-to-chart --configPath /path/to/your/custom-config.json
 
-This will download the GTFS file specified in `config.js` . Then, `gtfs-to-chart` will build the HTML charts and save them in `charts/:agency_key`.
+This will download the GTFS file specified in `config.js` . Then, `gtfs-to-chart` will build the HTML charts and save them in `charts/:sourceId`.
 
 ### Options
 

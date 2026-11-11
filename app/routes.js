@@ -1,49 +1,48 @@
-import { readFileSync } from 'node:fs';
-
-import { openDb, getRoutes } from 'gtfs';
 import express from 'express';
+import { generateOverviewHTML, generateChartHTML } from '../lib/utils.js';
 
-import { setDefaultConfig, generateOverviewHTML, generateChartHTML } from '../lib/utils.js';
+// The server owns the instance; requests only borrow it.
+export function createRouter(gtfs, config) {
+  const router = new express.Router();
+  const sourceIds = config.agencies.map((agency) => agency.sourceId);
+  const sourceFor = (request) => {
+    const sourceId = request.query.sourceId ?? sourceIds[0];
+    if (!sourceIds.includes(sourceId)) {
+      throw new Error('Invalid sourceId provided');
+    }
+    return sourceId;
+  };
 
-const selectedConfig = JSON.parse(readFileSync(new URL('../config.json', import.meta.url)));
-const config = setDefaultConfig(selectedConfig);
-// Override noHead config option so full HTML pages are generated
-config.noHead = false;
-config.assetPath = '/';
-config.log = console.log;
-config.logWarning = console.warn;
-config.logError = console.error;
-config.isLocal = true;
+  router.get('/', async (request, response, next) => {
+    try {
+      const sourceId = sourceFor(request);
+      const routes = await gtfs.schedule.routes
+        .where({ source_id: sourceId })
+        .all();
+      const html = await generateOverviewHTML(
+        gtfs,
+        sourceId,
+        { ...config, isLocal: true },
+        routes,
+      );
+      response.send(html);
+    } catch (error) {
+      next(error);
+    }
+  });
 
-const router = new express.Router();
-
-openDb(config);
-
-/*
- * Show all routes
- */
-router.get('/', async (request, response, next) => {
-  try {
-    const routes = getRoutes();
-    const html = await generateOverviewHTML(config, routes);
-    response.send(html);
-  } catch (error) {
-    next(error);
-  }
-});
-
-/*
- * Show a specific chart
- */
-router.get('/charts/:routeId', async (request, response) => {
-  const { routeId } = request.params;
-
-  try {
-    const html = await generateChartHTML(config, routeId);
-    response.send(html);
-  } catch (error) {
-    return response.render('error', { error });
-  }
-});
-
-export default router;
+  router.get('/charts/:routeId', async (request, response) => {
+    try {
+      const html = await generateChartHTML(
+        gtfs,
+        sourceFor(request),
+        config,
+        request.params.routeId,
+      );
+      response.send(html);
+    } catch (error) {
+      response.render('error', { error });
+    }
+  });
+  return router;
+}

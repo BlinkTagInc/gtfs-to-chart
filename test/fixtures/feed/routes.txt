@@ -1,0 +1,2 @@
+route_id,agency_id,route_short_name,route_long_name,route_type
+r,a,10,Fixture Route,3

@@ -1,10 +1,8 @@
 {
   "agencies": [
     {
-      "agency_key": "bart",
-      "url": "http://www.bart.gov/dev/schedules/google_transit.zip"
+      "sourceId": "caltrain",
+      "url": "https://data.trilliumtransit.com/gtfs/caltrain-ca-us/caltrain-ca-us.zip"
     }
-  ],
-  "chartDate": "20250606",
-  "sqlitePath": "/tmp/gtfs"
+  ]
 }

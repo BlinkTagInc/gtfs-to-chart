@@ -1,6 +1,6 @@
 {
   "name": "gtfs-to-chart",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Generate interactive transit stringline charts from GTFS Schedule data.",
   "keywords": [
     "transit",

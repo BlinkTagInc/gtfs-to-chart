@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-11-11
+
 ### Changed
 
 - Prepare v3 around node-GTFS v5 configuration, structured reporting, and a named `generateCharts` API with typed results.
@@ -144,3 +146,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Breaking Changes
 
 - Converted to ES6 Module
+
+[Unreleased]: https://github.com/BlinkTagInc/gtfs-to-chart/compare/3.0.0...main
+[3.0.0]: https://github.com/BlinkTagInc/gtfs-to-chart/compare/2.2.0...3.0.0

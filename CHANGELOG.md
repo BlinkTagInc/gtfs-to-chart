@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Prepare v3 around node-GTFS v5 configuration, structured reporting, and a named `generateCharts` API with typed results.
+- Group chart settings under `charts` and file output settings under `output`; reject legacy options.
+- Replace the live Express app with the `serve` command for generated output.
+- Build TypeScript from `src` into published ESM and declarations in `dist`; move templates and assets into dedicated directories and rename the license to `LICENSE.txt`.
+- Replace automatic destructive exports with staged output and explicit overwrite of generated directories.
+- Remove legacy utility, logging, CLI, and server dependencies.
+
+### Fixed
+
+- Preserve service-day hours above 24 and first-stop dwell when expanding frequencies.
+- Match browser station positions by direction as well as stop ID.
+- Avoid collisions between route filenames and source directories.
+- Escape feed data embedded in HTML script elements.
+- Honor timepoint filtering, report fallback distances, and avoid division by zero for colocated stops.
+- Exclude routes without service from indexes and reject generation failures instead of reporting false success.
+
 ## [2.2.0] - 2026-11-10
 
 ### Updated

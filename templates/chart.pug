@@ -1,0 +1,28 @@
+include formatting-functions.pug
+
+<!-- Chart generated on #{Date()} using GTFS-to-Chart version #{version} -->
+.chart-page
+  .container
+    .row.mt-4.mb-4
+      .col-md-12
+        h1.timetable-page-label
+          if route.route_color
+            .route-color-swatch-large(style=`background-color: #${route.route_color}`)
+          span= getRouteName(route)
+        h3= serviceDate
+
+    .chart(id="chart")
+      .row.mb-3
+        .col-md-6
+          .card
+            .card-header
+              h3 Transit Stringline Chart
+            .card-body
+              div Based on <a href="https://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey">E.J. Marey’s</a> graphical train schedule. Stations are positioned to scale so that slope encodes speed and can show where express trips pass non-express trips. Based on work by <a href="https://observablehq.com/@mbostock/mareys-trains">Mike Bostock</a>.
+
+    ul.notes
+      each note in chartData.notes
+        li= note
+
+    .row-mt-4.mb-4
+      a(href="https://github.com/BlinkTagInc/gtfs-to-chart") Created with GTFS-to-Chart

@@ -1,8 +1,16 @@
 {
-  "agencies": [
+  "database": {
+    "path": "./gtfs.sqlite"
+  },
+  "sources": [
     {
       "sourceId": "caltrain",
-      "url": "https://data.trilliumtransit.com/gtfs/caltrain-ca-us/caltrain-ca-us.zip"
+      "schedule": {
+        "url": "https://data.trilliumtransit.com/gtfs/caltrain-ca-us/caltrain-ca-us.zip"
+      }
     }
-  ]
+  ],
+  "output": {
+    "directory": "./charts"
+  }
 }

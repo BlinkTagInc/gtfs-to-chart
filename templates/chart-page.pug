@@ -1,0 +1,10 @@
+extends layout
+block content
+  include chart.pug
+
+block footer
+  script(src="https://unpkg.com/d3@5")
+  script(src="https://unpkg.com/d3-delaunay@5")
+  script.
+    const chartData = !{serializedData};
+  script(src=`${assetPath}js/chart.js`)

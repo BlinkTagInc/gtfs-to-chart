@@ -1,8 +1,7 @@
 {
   "name": "gtfs-to-chart",
   "version": "2.2.0",
-  "private": false,
-  "description": "Generate stringline charts of a transit routes from GTFS",
+  "description": "Generate interactive transit stringline charts from GTFS Schedule data.",
   "keywords": [
     "transit",
     "gtfs",
@@ -15,64 +14,116 @@
     "url": "https://github.com/blinktaginc/gtfs-to-chart/issues"
   },
   "repository": {
-    "url": "https://github.com/BlinkTagInc/gtfs-to-chart.git"
+    "type": "git",
+    "url": "git+https://github.com/BlinkTagInc/gtfs-to-chart.git"
   },
   "license": "MIT",
   "author": "Brendan Nee <brendan@blinktag.com>",
   "type": "module",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "bin": {
-    "gtfs-to-chart": "bin/gtfs-to-chart.js"
+    "gtfs-to-chart": "dist/bin/gtfs-to-chart.js"
   },
   "scripts": {
-    "start": "node app/index.js",
-    "prepare": "husky",
-    "test": "node --test test/*.test.js",
-    "check": "node scripts/check.js"
+    "build": "tsdown",
+    "build-watch": "tsdown --watch",
+    "test": "pnpm run build && node --test test/*.test.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "node .husky/install.mjs",
+    "prepack": "pnpm run build",
+    "test:release": "pnpm run build && node --test test/package.test.js"
   },
   "dependencies": {
-    "better-copy": "^1.0.4",
-    "chalk": "^6.0.1",
-    "connect-slashes": "^1.4.0",
-    "express": "^5.3.0",
     "gtfs": "5.0.0-beta.0",
-    "js-beautify": "^2.0.3",
-    "lodash-es": "^4.18.1",
-    "moment": "^2.31.0",
-    "progress": "^2.0.3",
-    "pug": "^3.0.4",
-    "sanitize-filename": "^1.6.4",
-    "simplify-geojson": "^1.0.5",
-    "timer-machine": "^1.1.0",
-    "untildify": "^6.0.0",
-    "yargs": "^18.2.0"
+    "pug": "^3.0.4"
   },
   "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^17.6.0",
-    "prettier": "^3.9.10"
+    "@types/node": "26",
+    "@release-it/keep-a-changelog": "^8.0.1",
+    "husky": "9.1.7",
+    "lint-staged": "17.6.0",
+    "oxlint": "1.93.0",
+    "prettier": "3.9.10",
+    "publint": "^0.3.25",
+    "release-it": "^21.1.2",
+    "tsdown": "0.23.7",
+    "typescript": "7.1.0-beta",
+    "@types/pug": "^2.0.10"
   },
   "engines": {
     "node": "^22.18.0 || >=24.0.0"
   },
   "release-it": {
+    "git": {
+      "requireBranch": "main",
+      "requireCommits": true,
+      "commitMessage": "Release ${version}",
+      "tagName": "${version}",
+      "tagAnnotation": "Release ${version}"
+    },
+    "npm": {
+      "publish": true,
+      "publishPackageManager": "pnpm",
+      "publishArgs": [
+        "--no-git-checks"
+      ]
+    },
     "github": {
-      "release": true
+      "release": true,
+      "releaseName": "GTFS-to-Chart ${version}"
     },
     "plugins": {
       "@release-it/keep-a-changelog": {
-        "filename": "CHANGELOG.md"
+        "filename": "CHANGELOG.md",
+        "addUnreleased": true,
+        "addVersionUrl": true,
+        "head": "main"
       }
+    },
+    "hooks": {
+      "before:init": [
+        "pnpm run lint",
+        "pnpm run format:check",
+        "pnpm run typecheck",
+        "pnpm test",
+        "pnpm run test:release"
+      ],
+      "after:bump": "pnpm run build"
     }
   },
   "prettier": {
     "singleQuote": true
   },
   "lint-staged": {
-    "*.json": "prettier --write",
-    "*.{js,css,md}": "prettier --write"
+    "*.{js,cjs,mjs,ts,cts,mts}": [
+      "oxlint --fix",
+      "prettier --write"
+    ],
+    "*.{json,jsonc,md,yml,yaml}": "prettier --write"
   },
-  "allowScripts": {
-    "better-sqlite3": true
-  }
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "assets",
+    "templates",
+    "config-sample.json",
+    "CHANGELOG.md",
+    "LICENSE.txt",
+    "CONTRIBUTING.md",
+    "docs/images"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "packageManager": "pnpm@12.18.0",
+  "homepage": "https://github.com/BlinkTagInc/gtfs-to-chart#readme"
 }

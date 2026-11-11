@@ -1,8 +1,8 @@
-node_modules
-charts
-config*
+node_modules/
+dist/
+charts/
+config*.json
 !config-sample.json
-views/custom
-
-.git
+*.sqlite*
 .DS_Store
+internal/

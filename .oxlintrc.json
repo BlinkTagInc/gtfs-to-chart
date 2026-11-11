@@ -1,0 +1,11 @@
+{
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "curly": ["error", "all"],
+    "no-var": "error",
+    "prefer-const": "error"
+  },
+  "ignorePatterns": ["dist", "assets"]
+}

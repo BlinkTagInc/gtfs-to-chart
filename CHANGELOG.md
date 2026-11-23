@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-11-22
+
 ### Changed
 
 - Require Node.js 24.22.3 or later.
@@ -155,4 +157,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Converted to ES6 Module
 
+[3.0.1]: https://github.com/BlinkTagInc/gtfs-to-chart/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/BlinkTagInc/gtfs-to-chart/compare/2.2.0...3.0.0
+[Unreleased]: https://github.com/BlinkTagInc/gtfs-to-chart/compare/3.0.1...main

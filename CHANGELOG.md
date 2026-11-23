@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Require Node.js 24.22.3 or later.
+
+### Updated
+
+- Update node-GTFS to 5.0.0-beta.2 and refresh development dependencies.
+
 ## [3.0.0] - 2026-11-11
 
 ### Changed
@@ -147,5 +155,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Converted to ES6 Module
 
-[Unreleased]: https://github.com/BlinkTagInc/gtfs-to-chart/compare/3.0.0...main
 [3.0.0]: https://github.com/BlinkTagInc/gtfs-to-chart/compare/2.2.0...3.0.0

@@ -1,9 +1,7 @@
 minimumReleaseAgeExclude:
-  - gtfs@5.0.0-beta.0
-
-allowBuilds:
-  better-sqlite3: true
-  protobufjs: true
+  - gtfs@5.0.0-beta.2
+  - lint-staged@17.6.2
+  - release-it@21.1.3
 
 overrides:
   'jsdoc>markdown-it': '15.0.3'

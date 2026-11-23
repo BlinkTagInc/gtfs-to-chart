@@ -1,20 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { spawnSync } from 'node:child_process';
-import {
-  mkdtemp,
-  mkdir,
-  readFile,
-  readdir,
-  rm,
-  symlink,
-  writeFile,
-} from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const project = fileURLToPath(new URL('..', import.meta.url));
+const project = fileURLToPath(new URL('../..', import.meta.url));
 
 test('packed package includes runtime assets, types, license, and a working CLI/API', async (t) => {
   const root = await mkdtemp(path.join(tmpdir(), 'chart-package-'));
@@ -51,25 +43,19 @@ test('packed package includes runtime assets, types, license, and a working CLI/
   }
   assert.ok(!names.some((name) => /^(src|test|lib|app)\//.test(name)));
   assert.ok(!names.includes('config.json'));
-  const extracted = spawnSync(
-    'tar',
-    ['-xzf', path.join(root, metadata.filename), '-C', root],
-    { encoding: 'utf8' },
+  await writeFile(path.join(root, 'package.json'), '{"private":true}');
+  const install = spawnSync(
+    'npm',
+    [
+      'install',
+      '--engine-strict',
+      '--no-audit',
+      '--no-fund',
+      metadata.filename,
+    ],
+    { cwd: root, encoding: 'utf8' },
   );
-  assert.equal(extracted.status, 0, extracted.stderr);
-  // Dependencies are shared; the package under test resolves only from the extracted tarball.
-  await symlink(
-    path.join(project, 'node_modules'),
-    path.join(root, 'package/node_modules'),
-    'dir',
-  );
-  const consumer = path.join(root, 'consumer');
-  await mkdir(path.join(consumer, 'node_modules'), { recursive: true });
-  await symlink(
-    path.join(root, 'package'),
-    path.join(consumer, 'node_modules/gtfs-to-chart'),
-    'dir',
-  );
+  assert.equal(install.status, 0, install.stderr);
   const config = {
     database: { path: ':memory:' },
     sources: [{ schedule: { path: path.join(project, 'test/fixtures/feed') } }],
@@ -77,11 +63,11 @@ test('packed package includes runtime assets, types, license, and a working CLI/
     output: { directory: path.join(root, 'output') },
   };
   await writeFile(
-    path.join(consumer, 'run.mjs'),
+    path.join(root, 'run.mjs'),
     `import { generateCharts } from 'gtfs-to-chart';\nconst result = await generateCharts(${JSON.stringify(config)});\nconsole.log(JSON.stringify(result));\n`,
   );
   const run = spawnSync(process.execPath, ['run.mjs'], {
-    cwd: consumer,
+    cwd: root,
     encoding: 'utf8',
   });
   assert.equal(run.status, 0, run.stderr);
@@ -98,9 +84,23 @@ test('packed package includes runtime assets, types, license, and a working CLI/
   assert.ok(html.includes('../../css/chart.css'));
   const cli = spawnSync(
     process.execPath,
-    [path.join(root, 'package/dist/bin/gtfs-to-chart.js'), '--version'],
-    { cwd: consumer, encoding: 'utf8' },
+    [path.join(root, 'node_modules/.bin/gtfs-to-chart'), '--version'],
+    { cwd: root, encoding: 'utf8' },
   );
   assert.equal(cli.status, 0, cli.stderr);
   assert.equal(cli.stdout.trim(), metadata.version);
+  const output = path.join(root, 'cli-output');
+  await writeFile(path.join(root, 'config.json'), JSON.stringify(config));
+  const generate = spawnSync(
+    process.execPath,
+    [
+      path.join(root, 'node_modules/.bin/gtfs-to-chart'),
+      '--output',
+      output,
+      '--quiet',
+    ],
+    { cwd: root, encoding: 'utf8' },
+  );
+  assert.equal(generate.status, 0, generate.stderr);
+  assert.ok(await readFile(path.join(output, 'index.html'), 'utf8'));
 });

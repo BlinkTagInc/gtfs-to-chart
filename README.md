@@ -8,16 +8,16 @@ Generate interactive stringline charts from GTFS Schedule data. Stations run acr
 
 ## Installation
 
-Requires Node.js 22.18+, 24, or 26 and uses [node-GTFS v5](https://github.com/BlinkTagInc/node-gtfs). This major version is currently a beta.
+Requires Node.js 24.22.3 or later.
 
 ```sh
-npm install -g gtfs-to-chart@beta
+npm install -g gtfs-to-chart
 ```
 
 For use in an application:
 
 ```sh
-npm install gtfs-to-chart@beta
+npm install gtfs-to-chart
 ```
 
 ## Quick start

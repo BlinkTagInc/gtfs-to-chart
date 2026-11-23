@@ -1,6 +1,6 @@
 # Contributing
 
-Use Node.js 22.18+, 24, or 26 and the pnpm version in `package.json`.
+Use Node.js 24.22.3 or later and the pnpm version in `package.json`.
 
 ```sh
 pnpm install
@@ -23,7 +23,7 @@ pnpm test:release
 pnpm exec publint
 ```
 
-`test:release` packs the package and generates charts using only its published files. CI runs on Node.js 22, 24, and 26. Local checks do not replace reviewing that matrix.
+`test:release` installs the npm tarball with strict engine checks and generates charts from the fixture. CI tests on Node.js 24.22.3, 24, and 26 and checks the installed package on Linux and macOS at the minimum version. Local checks do not replace reviewing that matrix.
 
 Releases use release-it on `main`, including changelog updates, validation, npm publication, and a GitHub release. Commit the intended changes before invoking release-it. For subsequent beta releases:
 
